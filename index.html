@@ -20,7 +20,7 @@
 <script>if('scrollRestoration' in history){history.scrollRestoration='manual';}window.scrollTo(0,0);</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Great+Vibes&family=Dancing+Script:wght@600;700&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Great+Vibes&family=Dancing+Script:wght@600;700&family=Inter+Tight:wght@500;600;700&family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="portada.jpg">
 <style>
 :root{
@@ -631,7 +631,8 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
 /* ── 6. LLUVIA DE SOBRES ── */
 /* ── LLUVIA DE SOBRES (ls-) ── */
 #regalos.ls-sec{background:var(--sage-deep);overflow:hidden;isolation:isolate}
-#regalos.ls-sec::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 80% 50% at 50% 14%,rgba(247,231,206,.10) 0%,transparent 70%)}
+#regalos.ls-sec{background:radial-gradient(ellipse 80% 50% at 50% 14%,rgba(247,231,206,.10) 0%,transparent 70%),var(--sage-deep)}
+#regalos.fade-b::after{z-index:3}#regalos.fade-t::before{z-index:3}
 #regalos .eyebrow,#regalos .heading{color:var(--champ)}
 .ls-rain{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .ls-drop{position:absolute;top:-48px;left:0;display:block;will-change:transform,opacity;opacity:0}
@@ -771,6 +772,21 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
 #vestimenta{padding-bottom:calc(min(11vh,88px) + 120px)!important}
 #album{padding-bottom:calc(min(11vh,88px) + 120px)!important}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* textura de papel en tarjetas */
+.card,.fam-card,.pad-slide,.madrina,#rsvp-section .rv2-card{background-color:#FDF8F7!important;background-image:linear-gradient(160deg,rgba(255,255,255,.55),rgba(247,231,206,.18)),url('papel.webp')!important;background-size:auto,360px 360px!important;box-shadow:0 14px 36px rgba(59,42,46,.10),inset 0 0 0 1px rgba(255,255,255,.6)}
+/* hero estético */
+.hero-content{padding:0 30px 100px;max-width:400px}
+.hero-content::before{content:'';position:absolute;left:-10%;right:-10%;top:-18%;bottom:40px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(26,16,20,.62) 0%,rgba(26,16,20,.38) 45%,rgba(26,16,20,0) 75%)}
+.hero-names{display:flex;align-items:baseline;justify-content:center;gap:.6em;margin-bottom:10px;flex-wrap:wrap}
+.hero-names .hero-mono{font-size:clamp(46px,13vw,58px);margin-bottom:0}
+.hero-amp{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:28px;color:var(--champ)}
+.hero-verse{font-size:clamp(16px,4.4vw,18px);line-height:1.45}
+.hero-verse .vl + .vl{margin-top:4px}
+
+.txt-halo{position:absolute;left:0;right:0;top:60px;bottom:60px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 72% 48% at 50% 50%,rgba(250,242,241,.92) 0%,rgba(250,242,241,.78) 45%,rgba(250,242,241,0) 100%)}
+#invitacion p,#invitacion .invite-verse{text-shadow:0 0 18px rgba(250,242,241,1),0 0 6px rgba(250,242,241,.95)}
+.cd-value{font-family:'Bodoni Moda',serif!important;font-weight:500!important;font-size:clamp(34px,10vw,48px)!important;letter-spacing:0!important;font-variant-numeric:lining-nums}
 </style>
 </head>
 <body>
@@ -804,14 +820,12 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
     <div class="hero-dust" id="heroDust" aria-hidden="true"></div>
     <div class="hero-frame"></div>
     <div class="hero-content" id="heroContent">
-      <span class="hero-mono rv">E&amp;J</span>
+      <span class="hero-names rv"><span class="hero-mono">Jenifer</span><span class="hero-amp">&amp;</span><span class="hero-mono">Edgar</span></span>
       <p class="hero-verse rv">
         <span class="vl">Más vale dos que uno, porque obtienen más fruto de su esfuerzo...</span>
         <span class="vl">Uno solo puede ser vencido pero dos pueden resistir.</span>
         <span class="vl">¡La cuerda de tres hilos no se romper fácilmente!</span>
       </p>
-      <span class="hero-cite metal-txt rv">Eclesiastés 4 : 9 – 12</span>
-      <span class="hero-date rv">27 · Noviembre · 2027</span>
     </div>
     <div class="scroll-hint" id="scrollHint">
       <span class="scroll-hint-txt">Desliza</span>
@@ -822,6 +836,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
   <!-- INVITACIÓN -->
   <section id="invitacion" class="sec intro-card ink-host" data-nav="Invitación" style="text-align:center;overflow:hidden">
     <div class="ink-bg ink-d1" aria-hidden="true"><i style="background-image:url('ink/ink-hero.webp')"></i></div>
+    <div class="txt-halo" aria-hidden="true"></div>
     <div class="invite-verse rv">
       <p class="lead">Porque el amor no solo es sentir, es elegir.</p>
       <p>El amor no promete perfección, promete permanencia, promete quedarse cuando todos se van.</p>
@@ -943,13 +958,13 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
   </section>
 
   <!-- UBICACIÓN -->
-  <section id="ubicacion" class="sec" data-nav="Ubicación" style="text-align:center;background:var(--surface)">
+  <section id="ubicacion" class="sec ink-host" data-nav="Ubicación" style="text-align:center;background:var(--surface);overflow:hidden">
+    <div class="ink-bg ink-d3 flip" aria-hidden="true"><i style="background-image:url('ink/ink-hero.webp')"></i></div>
     <span class="eyebrow rv">Dónde Celebramos</span>
     <h2 class="heading-sm split">Ceremonia y Recepción</h2>
 
     <div class="loc-float" style="margin-top:28px">
-      <div class="card loc-card ink-host rv">
-        <div class="ink-bg ink-oval" aria-hidden="true"><i style="background-image:url('ink/ink-oval.webp')"></i></div>
+      <div class="card loc-card rv">
         <span class="loc-kind">Ceremonia Religiosa</span>
         <span class="loc-venue-lbl">Boda y Bautizo</span>
         <div class="loc-place">Iglesia de San Miguel Arcángel</div>
@@ -966,8 +981,7 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
     </div>
 
     <div class="loc-float d2" style="margin-top:22px">
-      <div class="card loc-card ink-host rv">
-        <div class="ink-bg ink-oval flip" aria-hidden="true"><i style="background-image:url('ink/ink-corner.webp')"></i></div>
+      <div class="card loc-card rv">
         <span class="loc-kind">Recepción</span>
         <span class="loc-venue-lbl">Salón de Eventos</span>
         <div class="loc-place">Salón de Eventos Jip</div>
