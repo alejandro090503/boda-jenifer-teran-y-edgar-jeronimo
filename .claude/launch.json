@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "boda-jenifer",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-l", "3471", "."],
+      "port": 3471
+    }
+  ]
+}
