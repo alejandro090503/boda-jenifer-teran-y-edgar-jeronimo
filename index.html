@@ -789,6 +789,14 @@ body{background:var(--bg);color:var(--text);font-family:'Cormorant Garamond',ser
 .cd-value{font-family:'Bodoni Moda',serif!important;font-weight:500!important;font-size:clamp(34px,10vw,48px)!important;letter-spacing:0!important;font-variant-numeric:lining-nums}
 .intro-date,.hero-date,.footer-date{font-weight:600!important;letter-spacing:.14em!important;font-size:15px!important}
 .loc-txt{font-size:15px!important;letter-spacing:.02em}
+.itin-time{font-family:'Bodoni Moda',serif!important;font-weight:500!important;font-size:32px!important;letter-spacing:.04em;color:var(--rose-deep)!important}
+.itin-dot{transform:rotate(45deg)}
+.itin-item.lit .itin-dot{box-shadow:0 0 0 5px rgba(168,138,94,.16),0 0 18px 4px rgba(217,191,151,.85)}
+.itin-item .itin-dot::after{content:'';position:absolute;inset:-6px;border:1px solid var(--champ-deep);opacity:0}
+.itin-item.lit .itin-dot{position:relative}
+.itin-item.lit .itin-dot::after{animation:dotRing 1.4s ease-out 1}
+@keyframes dotRing{from{transform:scale(.6);opacity:.9}to{transform:scale(2.4);opacity:0}}
+.itin-comet{position:absolute;left:50%;width:9px;height:9px;margin:-4px 0 0 -4.5px;border-radius:50%;background:#FFF6E4;box-shadow:0 0 10px 4px rgba(217,191,151,.9),0 0 26px 8px rgba(247,231,206,.6);z-index:2;pointer-events:none}
 </style>
 </head>
 <body>
@@ -1721,10 +1729,15 @@ function initLife(){
 
   /* itinerario: línea con scrub + alternado izq/der + pop del ícono */
   gsap.fromTo('#itinLine',{scaleY:0},{scaleY:1,ease:'none',scrollTrigger:{trigger:'#itinList',start:'top 75%',end:'bottom 60%',scrub:true}});
+  const comet=document.createElement('span');comet.className='itin-comet';document.getElementById('itinList').appendChild(comet);
+  gsap.fromTo(comet,{top:'0%',opacity:0},{top:'100%',opacity:1,ease:'none',scrollTrigger:{trigger:'#itinList',start:'top 75%',end:'bottom 60%',scrub:.6}});
   document.querySelectorAll('.itin-item').forEach((it,i)=>{
-    const st={trigger:it,start:'top 86%'};
-    gsap.fromTo(it,{opacity:0,x:i%2?50:-50},{opacity:1,x:0,duration:.85,ease:'power3.out',scrollTrigger:st});
-    gsap.fromTo(it.querySelector('.itin-dot'),{scale:0},{scale:1,duration:.5,delay:.35,ease:'back.out(3)',scrollTrigger:st});
+    const st={trigger:it,start:'top 84%'};
+    const tl=gsap.timeline({scrollTrigger:st});
+    tl.fromTo(it.querySelector('.itin-dot'),{scale:0,rotation:-135},{scale:1,rotation:45,duration:.7,ease:'back.out(2.5)'})
+      .add(()=>it.classList.add('lit'),'<.2')
+      .fromTo(it.querySelector('.itin-time'),{opacity:0,y:18,letterSpacing:'.35em',filter:'blur(6px)'},{opacity:1,y:0,letterSpacing:'.04em',filter:'blur(0px)',duration:1.1,ease:'power3.out'},'<.05')
+      .fromTo(it.querySelector('.itin-ev'),{opacity:0,y:12,clipPath:'inset(0 50% 0 50%)'},{opacity:1,y:0,clipPath:'inset(0 0% 0 0%)',duration:1,ease:'power2.out'},'<.3');
   });
 
   /* vestimenta: la imagen se revela con máscara */
